@@ -5,7 +5,6 @@ import com.pedidos360.ms.cupones.entity.Cupon;
 import com.pedidos360.ms.cupones.service.CuponService;
 import com.pedidos360.ms.cupones.service.CuponService.ResultadoDescuento;
 
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -14,10 +13,6 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.server.ResponseStatusException;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -28,9 +23,6 @@ import java.util.Map;
 public class CuponController {
 
     private final CuponService cuponService;
-
-    @Value("${cupones.clave-interna}")
-    private String claveInterna;
 
     public CuponController(CuponService cuponService) {
         this.cuponService = cuponService;
@@ -90,20 +82,12 @@ public class CuponController {
         );
     }
 
-    // Aplicar cupón y registrar un uso.
-    // Solo lo llama MS-Orders al crear una orden (lleva la clave interna).
+    // Aplicar cupón y registrar un uso
+    // Operación administrativa: no llamar desde Angular.
+    // Pendiente de vincular a una orden antes de su uso real.
     @PostMapping("/aplicar")
     public ResultadoDescuento aplicar(
-            @RequestHeader(value = "X-Clave-Interna", required = false) String clave,
             @Valid @RequestBody SolicitudDescuento request) {
-
-        if (clave == null || !MessageDigest.isEqual(
-                clave.getBytes(StandardCharsets.UTF_8),
-                claveInterna.getBytes(StandardCharsets.UTF_8))) {
-            throw new ResponseStatusException(
-                    HttpStatus.FORBIDDEN,
-                    "Operacion reservada a MS-Orders");
-        }
 
         return cuponService.aplicarCupon(
                 request.codigo(),
