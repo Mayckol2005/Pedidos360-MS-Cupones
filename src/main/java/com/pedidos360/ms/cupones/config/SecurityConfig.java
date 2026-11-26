@@ -60,7 +60,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 HttpMethod.POST,
                                 "/api/cupones/aplicar"
-                        ).hasRole("ADMIN")
+                        ).authenticated()
 
                         // Crear, listar, consultar y desactivar cupones
                         // requiere permisos administrativos.
