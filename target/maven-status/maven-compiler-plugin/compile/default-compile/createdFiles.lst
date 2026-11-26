@@ -1,0 +1,8 @@
+com\pedidos360\ms\cupones\dto\CrearCuponRequest.class
+com\pedidos360\ms\cupones\config\SecurityConfig.class
+com\pedidos360\ms\cupones\entity\Cupon.class
+com\pedidos360\ms\cupones\service\CuponService.class
+com\pedidos360\ms\cupones\controller\CuponController$SolicitudDescuento.class
+com\pedidos360\ms\cupones\repository\CuponRepository.class
+com\pedidos360\ms\cupones\config\AudienceValidator.class
+com\pedidos360\ms\cupones\controller\CuponController.class
